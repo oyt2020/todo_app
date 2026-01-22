@@ -9,6 +9,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.test.context.ActiveProfiles;
 
 import java.util.List;
 import java.util.Optional;
@@ -17,6 +18,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
 
+@ActiveProfiles("test")
 @ExtendWith(MockitoExtension.class)
 class TodoServiceTest {
 
@@ -26,7 +28,7 @@ class TodoServiceTest {
     @InjectMocks
     TodoService todoService;
 
-
+    //@Test
     @DisplayName("할 일 생성")
     void create_todo(){
         Todo todo = Todo.create("CI/CD 공부");
