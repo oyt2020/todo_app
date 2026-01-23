@@ -20,7 +20,7 @@ jobs:
         with:
           java-version: '23'
           distribution: 'temurin'
-          cache: 'gradle' # 캐싱 추가 , 빌드 시간 감소
+          #cache: 'gradle' # 캐싱 추가 , 빌드 시간 감소
 
       # 4. Gradle 실행 권한 부여
       - name: Grant execute permission for gradlew
