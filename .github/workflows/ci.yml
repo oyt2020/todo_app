@@ -28,7 +28,7 @@ jobs:
 
       # 5. 빌드 및 테스트 실행
       - name: Build with Gradle
-        run: ./gradlew build
+        run: ./gradlew build -Dspring.profiles.active=test
 
       # 도커 빌드 및 푸시 단계 추가
       - name: Login to Docker Hub
