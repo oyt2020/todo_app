@@ -1,5 +1,5 @@
 spring.datasource:
-        url: jdbc:h2:mem:testdb;MODE=MySQL # H2? ??? ??? ??
+        url: jdbc:h2:mem:testdb # H2? ??? ??? ??
         driver-class-name: org.h2.Driver
         username: sa
         password:
