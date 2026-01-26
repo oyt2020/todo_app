@@ -44,8 +44,8 @@ dependencies {
     // 4. 테스트 (가장 중요한 부분입니다)
     // spring-boot-starter-test 하나면 MVC, JPA, Validation 테스트 도구가 대부분 포함됩니다.
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    testImplementation 'org.testcontainers:mysql' // Testcontainers 사용 시 필요
-    testImplementation 'org.springframework.boot:spring-boot-testcontainers'
+    //testImplementation 'org.testcontainers:mysql' // Testcontainers 사용 시 필요
+    //testImplementation 'org.springframework.boot:spring-boot-testcontainers'
 
     // JUnit 5 실행기
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
