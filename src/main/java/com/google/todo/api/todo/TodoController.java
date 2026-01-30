@@ -6,6 +6,7 @@ import com.google.todo.api.todo.request.TodoUpdateRequest;
 import com.google.todo.api.todo.response.TodoResponse;
 import com.google.todo.domain.todo.Todo;
 import com.google.todo.domain.todo.TodoStatus;
+import com.google.todo.global.response.ApiResponse;
 import com.google.todo.service.todo.TodoService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -21,18 +22,19 @@ public class TodoController {
     private final TodoService todoService;
 
     @PostMapping
-    public Long create(@RequestBody @Valid TodoCreateRequest request) {
-        return todoService.createTodo(request.getTitle());
+    public ApiResponse<Long> create(@RequestBody @Valid TodoCreateRequest request) {
+        Long id = todoService.createTodo(request.getTitle());
+        return ApiResponse.success(id);
     }
 
     @GetMapping("/{id}")
-    public TodoResponse get(@PathVariable Long id) {
+    public ApiResponse<TodoResponse> get(@PathVariable Long id) {
         Todo todo = todoService.getTodo(id);
-        return new TodoResponse(todo);
+        return ApiResponse.success(new TodoResponse(todo));
     }
 
     @GetMapping
-    public List<TodoResponse> getTodos(
+    public ApiResponse<List<TodoResponse>> getTodos(
             @RequestParam(required = false)TodoStatus status
     ){
 
@@ -40,27 +42,34 @@ public class TodoController {
                 ? todoService.getTodos()
                 : todoService.getTodosByStatus(status);
 
-        return todos.stream()
+        List<TodoResponse> response = todos.stream()
                 .map(TodoResponse::new)
                 .toList();
+
+        return ApiResponse.success(response);
     }
 
     @PutMapping("/{id}")
-    public void update(
+    public ApiResponse<Void> update(
             @PathVariable Long id,
             @RequestBody @Valid TodoUpdateRequest request
     ){
         todoService.updateTodo(id, request.getTitle());
+        return ApiResponse.success(null);
     }
 
     @PatchMapping("/{id}/complete")
-    public void complete(@PathVariable Long id){
+    public ApiResponse<Void> complete(@PathVariable Long id){
+
         todoService.completeTodo(id);
+        return ApiResponse.success(null);
     }
 
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable Long id){
+    public ApiResponse<Void> delete(@PathVariable Long id){
+
         todoService.deleteTodo(id);
+        return ApiResponse.success(null);
     }
 
 }
