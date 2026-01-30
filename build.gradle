@@ -1,6 +1,6 @@
 plugins {
     id 'java'
-    id 'org.springframework.boot' version '4.0.1'
+    id 'org.springframework.boot' version '3.5.10'
     id 'io.spring.dependency-management' version '1.1.7'
 }
 
@@ -25,24 +25,31 @@ repositories {
 }
 
 dependencies {
-    implementation 'org.springframework.boot:spring-boot-h2console'
-    implementation 'org.springframework.boot:spring-boot-starter-actuator'
-    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-    implementation 'org.springframework.boot:spring-boot-starter-flyway'
+    // 1. 웹 및 유효성 검사 (spring-web 대신 starter-web을 써야 전체 기능이 로드됩니다)
+    implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-validation'
-    implementation 'org.flywaydb:flyway-mysql'
-    compileOnly 'org.projectlombok:lombok'
-    runtimeOnly 'com.h2database:h2'
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+
+    // 2. 데이터베이스 및 마이그레이션
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+//    implementation 'org.flywaydb:flyway-core'
+//    implementation 'org.flywaydb:flyway-mysql'
     runtimeOnly 'com.mysql:mysql-connector-j'
+    runtimeOnly 'com.h2database:h2' // H2 콘솔 및 DB 사용을 위해 필요
+
+    // 3. 롬복 (Lombok)
+    compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
-    testImplementation 'org.springframework.boot:spring-boot-starter-actuator-test'
-    testImplementation 'org.springframework.boot:spring-boot-starter-data-jpa-test'
-    testImplementation 'org.springframework.boot:spring-boot-starter-flyway-test'
-    testImplementation 'org.springframework.boot:spring-boot-starter-validation-test'
-    testImplementation 'org.springframework.boot:spring-boot-testcontainers'
-    testImplementation 'org.testcontainers:testcontainers-junit-jupiter'
-    testImplementation 'org.testcontainers:testcontainers-mysql'
+
+    // 4. 테스트 (가장 중요한 부분입니다)
+    // spring-boot-starter-test 하나면 MVC, JPA, Validation 테스트 도구가 대부분 포함됩니다.
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    //testImplementation 'org.testcontainers:mysql' // Testcontainers 사용 시 필요
+    //testImplementation 'org.springframework.boot:spring-boot-testcontainers'
     testImplementation 'com.h2database:h2'
+
+
+    // JUnit 5 실행기
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
 
