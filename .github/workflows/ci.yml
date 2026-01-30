@@ -49,10 +49,31 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
 
 
-
-      - name: Build and push
+      # 도커 이미지 빌드 및 푸시
+      - name: Build and push Docker Image
         uses: docker/build-push-action@v5
         with:
           context: .
           push: true
           tags: ${{ secrets.DOCKER_USERNAME }}/todo-app:latest
+
+      - name: Deploy to GCP
+        if: github.event_name == 'push'
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.GCP_HOST }}
+          username: ${{ secrets.GCP_USERNAME }}
+          key : ${{ secrets.GCP_SSH_KEY }}
+          script: |
+            # 기존 컨테이너 중지 및 삭제
+            docker rm -f my-todo-app || true
+            
+            docker pull ${{ secrets.DOCKER_USERNAME }}/todo-app:latest
+            
+            docker run -d \
+              --name my-todo-app \
+              --network host \
+              -e PASS_WORD=${{ secrets.DB_PASSWORD }} \
+              ${{ secrets.DOCKER_USERNAME }}/todo-app:latest
+            
+            docker image prune -f
