@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin(origins = "http://35.193.65.32") // 프론트 주소
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/todos")
