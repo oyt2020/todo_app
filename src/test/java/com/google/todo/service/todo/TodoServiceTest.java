@@ -66,4 +66,17 @@ class TodoServiceTest {
 
         assertThat(todo.getStatus()).isEqualTo(TodoStatus.COMPLETED);
     }
+
+    @Test
+    @DisplayName("할 일 미완료 처리")
+    void pending_todo(){
+        Todo todo = Todo.create("미완료");
+        todo.complete();
+
+        given(todoRepository.findById(1L)).willReturn(Optional.of(todo));
+
+        todoService.pendingTodo(1L);
+
+        assertThat(todo.getStatus()).isEqualTo(TodoStatus.PENDING);
+    }
 }

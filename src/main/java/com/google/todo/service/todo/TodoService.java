@@ -59,6 +59,12 @@ public class TodoService {
         todo.complete();
     }
 
+    // 미완료 상태로 변경
+    public void pendingTodo(Long todoId){
+        Todo todo = getTodo(todoId);
+        todo.pending();
+    }
+
     // 삭제
     public void deleteTodo(Long todoId){
         todoRepository.deleteById(todoId);

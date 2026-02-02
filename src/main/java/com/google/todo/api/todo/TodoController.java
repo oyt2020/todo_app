@@ -66,6 +66,12 @@ public class TodoController {
         return ApiResponse.success(null);
     }
 
+    @PatchMapping("/{id}/pending")
+    public ApiResponse<Void> pending(@PathVariable Long id){
+        todoService.pendingTodo(id);
+        return ApiResponse.success(null);
+    }
+
     @DeleteMapping("/{id}")
     public ApiResponse<Void> delete(@PathVariable Long id){
 

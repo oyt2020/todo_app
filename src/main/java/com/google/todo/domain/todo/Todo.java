@@ -38,6 +38,8 @@ public class Todo {
         this.status = TodoStatus.COMPLETED;
     }
 
+    public void pending(){ this.status = TodoStatus.PENDING; }
+
     public void updateTitle(String title){
         this.title = title;
     }
