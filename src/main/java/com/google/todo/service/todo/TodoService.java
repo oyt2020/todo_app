@@ -44,12 +44,13 @@ public class TodoService {
     // 제목 업데이트
     @Transactional
     public void updateTodo(Long todoId, String title){
+        System.out.println("전달받은 제목: " + title);
 
         Todo todo = todoRepository.findById(todoId)
                 .orElseThrow(() -> new IllegalArgumentException("해당 Todo가 없습니다."));
         todo.updateTitle(title);
         // 확인 용
-        todoRepository.save(todo);
+        todoRepository.saveAndFlush(todo);
     }
 
     // 완료 상태 변경
