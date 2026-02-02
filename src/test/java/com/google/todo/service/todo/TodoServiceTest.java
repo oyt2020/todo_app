@@ -38,10 +38,8 @@ class TodoServiceTest {
                 .willAnswer(invocation -> invocation.getArgument(0));
 
         Long id = todoService.createTodo("CI/CD 공부");
-
         //assertThat(id).isNull();
         verify(todoRepository).save(any(Todo.class));
-
     }
 
     @Test

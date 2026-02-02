@@ -5,12 +5,15 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.Calendar;
+import java.util.Date;
+
 
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "todos")
-public class Todo {
+public class Todo extends BaseTimeEntity {
 
 
     @Id
@@ -23,7 +26,6 @@ public class Todo {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private TodoStatus status;
-
 
     protected Todo(String title){
         this.title = title;

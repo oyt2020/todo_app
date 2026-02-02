@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Calendar;
 import java.util.List;
 
 @Service
@@ -69,10 +70,6 @@ public class TodoService {
     public void deleteTodo(Long todoId){
         todoRepository.deleteById(todoId);
     }
-
-
-
-
 
 
 
