@@ -42,6 +42,7 @@ public class TodoService {
     }
 
     // 제목 업데이트
+    @Transactional
     public void updateTodo(Long todoId, String title){
         Todo todo = getTodo(todoId);
         todo.updateTitle(title);
