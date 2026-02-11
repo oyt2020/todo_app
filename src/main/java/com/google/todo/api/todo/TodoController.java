@@ -24,7 +24,12 @@ public class TodoController {
 
     @PostMapping
     public ApiResponse<Long> create(@RequestBody @Valid TodoCreateRequest request) {
-        Long id = todoService.createTodo(request.getTitle());
+        Long id;
+        if (request.getScheduledDate() == null) {
+            id = todoService.createTodo(request.getTitle());
+        }else{
+            id = todoService.createTodo(request.getTitle(), request.getScheduledDate());
+        }
         return ApiResponse.success(id);
     }
 

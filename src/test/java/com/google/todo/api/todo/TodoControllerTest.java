@@ -12,6 +12,8 @@ import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.http.MediaType;
 
+import java.time.LocalDate;
+
 import static org.mockito.BDDMockito.given;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
@@ -54,6 +56,33 @@ class TodoControllerTest {
 
 
         verify(todoService).createTodo("CI/ CD 공부");
+    }
+
+    //날짜 지정 케이스
+    @Test
+    @DisplayName("날짜 지정 케이스")
+    void create_todo_2() throws Exception {
+        LocalDate T = LocalDate.of(2026,2,13);
+        given(todoService.createTodo("날짜 지정",T)).willReturn(1L);
+        TodoCreateRequest request = new TodoCreateRequest();
+
+        String json = """
+                {
+                    "title":"날짜 지정",
+                    "scheduledDate":"2026-02-13"
+                }
+                """;
+
+        mockMvc.perform(post("/api/todos")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(json))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.success").value(true))
+                .andExpect(jsonPath("$.data").value(1L));
+
+
+        verify(todoService).createTodo("날짜 지정", T);
+
     }
 
     // 실패 케이스

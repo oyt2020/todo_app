@@ -5,6 +5,7 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -27,13 +28,28 @@ public class Todo extends BaseTimeEntity {
     @Column(nullable = false)
     private TodoStatus status;
 
+    @Column(name="scheduled_date", nullable=false)
+    private LocalDate scheduledDate;
+
     protected Todo(String title){
         this.title = title;
         this.status = TodoStatus.PENDING;
+        this.scheduledDate = LocalDate.now();
+    }
+
+    protected Todo(String title,LocalDate scheduledDate){
+        this.title = title;
+        this.status = TodoStatus.PENDING;
+        this.scheduledDate = scheduledDate != null ? scheduledDate : LocalDate.now();
     }
 
     public static Todo create(String title){
         return new Todo(title);
+    }
+
+    public static Todo create(String title,LocalDate scheduledDate){
+
+        return new Todo(title,scheduledDate);
     }
 
     public void complete(){
@@ -44,5 +60,9 @@ public class Todo extends BaseTimeEntity {
 
     public void updateTitle(String title){
         this.title = title;
+    }
+
+    public void updateScheduledDate(LocalDate scheduledDate){
+        this.scheduledDate = scheduledDate != null ? scheduledDate : LocalDate.now();
     }
 }

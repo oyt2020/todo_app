@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.List;
 
@@ -17,9 +18,15 @@ import java.util.List;
 public class TodoService {
     private final TodoRepository todoRepository;
 
-    // 할 일 생성
+    // 할 일 생성 기본값
     public Long createTodo(String title){
         Todo todo = Todo.create(title);
+        return todoRepository.save(todo).getId();
+    }
+
+    // 할 일 생성 날짜 지정
+    public Long createTodo(String title, LocalDate scheduledDate){
+        Todo todo = Todo.create(title, scheduledDate);
         return todoRepository.save(todo).getId();
     }
 
@@ -70,6 +77,8 @@ public class TodoService {
     public void deleteTodo(Long todoId){
         todoRepository.deleteById(todoId);
     }
+
+
 
 
 
