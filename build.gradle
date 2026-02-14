@@ -41,6 +41,10 @@ dependencies {
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
 
+    // 모니터링 의존성
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    implementation 'io.micrometer:micrometer-registry-prometheus'
+
     // 4. 테스트 (가장 중요한 부분입니다)
     // spring-boot-starter-test 하나면 MVC, JPA, Validation 테스트 도구가 대부분 포함됩니다.
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
